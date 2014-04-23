@@ -97,6 +97,12 @@ else
 XBMC_SPLASH_FILE = package/thirdparty/xbmc/logos/splash.png
 endif
 
+ifneq ($(BR2_XBMC_MEDIA_FOLDER),"")
+XBMC_MEDIA_FOLDER = package/thirdparty/xbmc/media/$(call qstrip,$(BR2_XBMC_MEDIA_FOLDER))/*
+else
+XBMC_MEDIA_FOLDER = ""
+endif
+
 ifneq ($(BR2_XBMC_STARTING_FB),"")
 XBMC_STARTING_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_STARTING_FB)).fb.lzo
 else
@@ -107,6 +113,12 @@ ifneq ($(BR2_XBMC_STOPPING_FB),"")
 XBMC_STOPPING_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_STOPPING_FB)).fb.lzo
 else
 XBMC_STOPPING_FB = package/thirdparty/xbmc/fb_splashs/stopping.fb.lzo
+endif
+
+ifneq ($(BR2_XBMC_COPYING_FB),"")
+XBMC_COPYING_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_COPYING_FB)).fb.lzo
+else
+XBMC_COPYING_FB = package/thirdparty/xbmc/fb_splashs/copying.fb.lzo
 endif
 
 ifneq ($(BR2_XBMC_COMPLETE_FB),"")
@@ -168,8 +180,13 @@ define XBMC_INSTALL_SPLASHS
   mkdir -p $(TARGET_DIR)/usr/share/splash
   cp -f $(XBMC_STARTING_FB) $(TARGET_DIR)/usr/share/splash/starting.fb.lzo
   cp -f $(XBMC_STOPPING_FB) $(TARGET_DIR)/usr/share/splash/stopping.fb.lzo
+  cp -f $(XBMC_COPYING_FB) $(TARGET_DIR)/usr/share/splash/copying.fb.lzo
   cp -f $(XBMC_COMPLETE_FB) $(TARGET_DIR)/usr/share/splash/complete.fb.lzo
   cp -f $(XBMC_SPLASH_FILE) $(TARGET_DIR)/usr/share/xbmc/media/Splash.png
+endef
+
+define XBMC_INSTALL_MEDIA
+  cp -f $(XBMC_MEDIA_FOLDER) $(TARGET_DIR)/usr/share/xbmc/media/
 endef
 
 define XBMC_CLEAN_UNUSED_ADDONS
@@ -194,6 +211,10 @@ define XBMC_REMOVE_CONFLUENCE_SKIN
   rm -rf $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence
 endef
 
+define XBMC_INSTALL_ADDONS
+  cp -f package/thirdparty/xbmc/addons/* $(TARGET_DIR)/usr/share/xbmc/addons/
+endef
+
 define XBMC_STRIP_BINARIES
   find $(TARGET_DIR)/usr/lib/xbmc/ -name "*.so" -exec $(STRIPCMD) $(STRIP_STRIP_UNNEEDED) {} \;
   $(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/xbmc/xbmc.bin
@@ -208,9 +229,14 @@ XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SPLASHS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_UNUSED_ADDONS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_CONFLUENCE_SKIN
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_REMOTE_CONF
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ADDONS
 
 ifneq ($(BR2_ENABLE_DEBUG),y)
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_STRIP_BINARIES
+endif
+
+ifneq ($(XBMC_MEDIA_FOLDER),"")
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_MEDIA
 endif
 
 ifeq ($(BR2_XBMC_NO_CONFLUENCE),y)
