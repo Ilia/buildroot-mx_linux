@@ -3,6 +3,7 @@ BOXIK_SITE_METHOD = git
 BOXIK_SITE = https://github.com/Ilia/skin.boxik.git
 BOXIK_INSTALL_STAGING = YES
 BOXIK_INSTALL_TARGET = YES
+BOXIK_SOURCE=boxik-$(BOXIK_VERSION).tar.gz
 BOXIK_DEPENDENCIES = xbmc
 TEXTURE_PACKER=$(XBMC_DIR)/tools/TexturePacker/TexturePacker
 
