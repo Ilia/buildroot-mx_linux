@@ -80,6 +80,7 @@ config BR2_PACKAGE_XBMC
 	select BR2_PACKAGE_LIBAMPLAYER if BR2_ARM_AMLOGIC
 	select BR2_PACKAGE_AMREMOTE_CONFIG if BR2_ARM_AMLOGIC
 	select BR2_PACKAGE_XBMC_ADDON_NM
+	select BR2_PACKAGE_XBMC_SKIN_BOXIK
 	help
 	xbmc
 
@@ -89,6 +90,12 @@ menu "XBMC Options"
 	depends on BR2_PACKAGE_XBMC
 
 comment "XBMC Customization Options"
+
+config BR2_XBMC_MEDIA_FOLDER
+	string "Media folder"
+        default ""
+        help
+          This option will set the media folder.
 
 config BR2_XBMC_REMOTE_CONF
 	string "Remote Configuration"
@@ -171,6 +178,17 @@ config BR2_XBMC_STOPPING_FB
 		- If this option is not set XBMC will use it's default stopping fb splash
 		- Splash should be located in "package/thirdparty/xbmc/fb_splashs"
 		- Compiler will append ".fb.lzo" to end of file name
+
+config BR2_XBMC_COPYING_FB
+        string "Copying FB splash"
+        default ""
+        help
+          This option changes the copying fb splash.
+
+          NOTES:
+                - If this option is not set XBMC will use it's default copying fb splash
+                - Splash should be located in "package/thirdparty/xbmc/fb_splashs"
+                - Compiler will append ".fb.lzo" to end of file name
 
 config BR2_XBMC_COMPLETE_FB
 	string "Complete FB splash"
