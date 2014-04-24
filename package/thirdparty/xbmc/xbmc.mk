@@ -159,7 +159,7 @@ endef
 
 define XBMC_BUILD_VERSION
   cp -f package/thirdparty/xbmc/version $(TARGET_DIR)/usr/share/xbmc/system/
-endif
+endef
 
 define XBMC_INSTALL_SETTINGS
   cp -f $(XBMC_ADV_SETTINGS) $(TARGET_DIR)/usr/share/xbmc/system/advancedsettings.xml
