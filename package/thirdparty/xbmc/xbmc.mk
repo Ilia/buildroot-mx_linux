@@ -212,7 +212,7 @@ define XBMC_REMOVE_CONFLUENCE_SKIN
 endef
 
 define XBMC_INSTALL_ADDONS
-  cp -f package/thirdparty/xbmc/addons/* $(TARGET_DIR)/usr/share/xbmc/addons/
+  cp -rf package/thirdparty/xbmc/addons/* $(TARGET_DIR)/usr/share/xbmc/addons/
 endef
 
 define XBMC_STRIP_BINARIES
