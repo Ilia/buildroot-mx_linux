@@ -3,7 +3,7 @@
 ##  service.boxik.firmware Addon
 #
 ###############################################################################
-BOXIK_SERVICE_VERSION = 96e6c027ec96840f01ef3f8e48765ad2889c0a53
+BOXIK_SERVICE_VERSION = 15f12eb936856c9f2c813a895f18e93b8632aced
 BOXIK_SERVICE_SOURCE=boxik_service-$(BOXIK_SERVICE_VERSION).tar.gz
 BOXIK_SERVICE_SITE = https://github.com/Ilia/service.boxik.firmware.git
 BOXIK_SERVICE_SITE_METHOD = git
