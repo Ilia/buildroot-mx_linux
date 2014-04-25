@@ -10,7 +10,7 @@ BOXIK_SERVICE_SITE_METHOD = git
 BOXIK_SERVICE_INSTALL_STAGING = NO
 BOXIK_SERVICE_INSTALL_TARGET = YES
 
-define NM_INSTALL_TARGET_CMDS
+define BOXIK_SERVICE_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/usr/share/xbmc/addons/service.boxik.firmware
 	cp -rf $(@D)/* $(TARGET_DIR)/usr/share/xbmc/addons/service.boxik.firmware/
 endef
