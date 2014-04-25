@@ -1,4 +1,4 @@
-config BR2_PACKAGE_XBMC_ADDON_BOXIK_SERVICE_MX
+config BR2_PACKAGE_XBMC_ADDON_BOXIK_SERVICE
     bool "boxik_service"
     help
       Xbmc BOXiK Service Addon
