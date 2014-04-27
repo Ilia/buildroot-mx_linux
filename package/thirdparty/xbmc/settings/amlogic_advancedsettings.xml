@@ -3,11 +3,9 @@
   <hidecpurev>1</hidecpurev>
   <hidecpuserial>1</hidecpuserial>
   <hidetotaluptime>1</hidetotaluptime>
+  <hidecputemp>1</hidecputemp>
   <showexitbutton>false</showexitbutton>
   <loglevel hide="false">2</loglevel>
-<!-- TODO: Implement CPU temp readings -->
-  <!-- <cputempcommand>echo "$(cat /sys/class/saradc/saradc_ch7) F"</cputempcommand> -->
-  <hidecputemp>1</hidecputemp> <!-- Temporary -->
 
   <pvr>
     <minvideocachelevel>50</minvideocachelevel>
