@@ -5,7 +5,7 @@
 ###############################################################################
 XBMC_SUBTITLES_VERSION = 566e1578c2c0e0ae11e7d280f2b99fdcb0d10c7e
 XBMC_SUBTITLES_SOURCE = xbmc_subtitles-$(XBMC_SUBTITLES_VERSION).tar.gz
-XBMC_SUBTITLES_SITE = git@github.com:amet/script.xbmc.subtitles.git
+XBMC_SUBTITLES_SITE = https://github.com/amet/script.xbmc.subtitles.git
 XBMC_SUBTITLES_SITE_METHOD = git
 XBMC_SUBTITLES_INSTALL_STAGING = NO
 XBMC_SUBTITLES_INSTALL_TARGET = YES
