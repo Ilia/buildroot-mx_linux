@@ -6,5 +6,6 @@ comment "XBMC services"
 comment "XBMC scripts"
 
 source "package/thirdparty/xbmcaddons/nm/Config.in"
+source "package/thirdparty/xbmcaddons/boxik_service/Config.in"
 
 endmenu
