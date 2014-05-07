@@ -11,7 +11,8 @@ SIMPLEJSON_INSTALL_STAGING = NO
 SIMPLEJSON_INSTALL_TARGET = YES
 
 define SIMPLEJSON_INSTALL_TARGET_CMDS
-	cp -rf $(@D)/script.module.simplejson $(TARGET_DIR)/usr/share/xbmc/addons/
+	mkdir -p $(TARGET_DIR)/usr/share/xbmc/addons/script.module.simplejson
+        cp -rf $(@D)/* $(TARGET_DIR)/usr/share/xbmc/addons/script.module.simplejson/
 endef
 
 $(eval $(call xbmc-addon,package/thirdparty/xbmcaddons,simplejson))

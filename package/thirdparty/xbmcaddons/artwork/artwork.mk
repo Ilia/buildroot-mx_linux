@@ -11,7 +11,8 @@ ARTWORK_INSTALL_STAGING = NO
 ARTWORK_INSTALL_TARGET = YES
 
 define ARTWORK_INSTALL_TARGET_CMDS
-	cp -rf $(@D)/script.artwork.downloader $(TARGET_DIR)/usr/share/xbmc/addons/
+	mkdir -p $(TARGET_DIR)/usr/share/xbmc/addons/script.artwork.downloader
+        cp -rf $(@D)/* $(TARGET_DIR)/usr/share/xbmc/addons/script.artwork.downloader/
 endef
 
 $(eval $(call xbmc-addon,package/thirdparty/xbmcaddons,artwork))

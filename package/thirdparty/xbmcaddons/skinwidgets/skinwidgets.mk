@@ -11,7 +11,8 @@ SKINWIDGETS_INSTALL_STAGING = NO
 SKINWIDGETS_INSTALL_TARGET = YES
 
 define SKINWIDGETS_INSTALL_TARGET_CMDS
-	cp -rf $(@D)/service.skin.widgets $(TARGET_DIR)/usr/share/xbmc/addons/
+	mkdir -p $(TARGET_DIR)/usr/share/xbmc/addons/service.skin.widgets
+        cp -rf $(@D)/* $(TARGET_DIR)/usr/share/xbmc/addons/service.skin.widgets/
 endef
 
 $(eval $(call xbmc-addon,package/thirdparty/xbmcaddons,skinwidgets))

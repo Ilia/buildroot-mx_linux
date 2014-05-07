@@ -11,7 +11,8 @@ RADIO_INSTALL_STAGING = NO
 RADIO_INSTALL_TARGET = YES
 
 define RADIO_INSTALL_TARGET_CMDS
-	cp -rf $(@D)/plugin.audio.radio_de $(TARGET_DIR)/usr/share/xbmc/addons/
+	mkdir -p $(TARGET_DIR)/usr/share/xbmc/addons/plugin.audio.radio_de
+        cp -rf $(@D)/* $(TARGET_DIR)/usr/share/xbmc/addons/plugin.audio.radio_de/
 endef
 
 $(eval $(call xbmc-addon,package/thirdparty/xbmcaddons,radio))
