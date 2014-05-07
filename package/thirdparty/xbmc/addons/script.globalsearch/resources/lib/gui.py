@@ -123,7 +123,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(342) + '[/B]' )
         count = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "mpaa", "director", "writer"], "sort": { "method": "label" }, "filter": { "or":[{"field":"title","operator":"contains","value":"%s"},{"field":"title","operator":"contains","value":"%s"}] }}, "id": 1}' % (self.searchstring, self.searchstring))
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "mpaa", "director", "writer"], "sort": { "method": "label" }, "filter": {"field":"title","operator":"contains","value":"%s"} }, "id": 1}' % self.searchstring)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('movies')):
@@ -141,7 +141,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 outline = item['plotoutline']
                 rating = str(round(float(item['rating']),1))
                 starrating = 'rating%.1d.png' % round(float(rating)/2)
-                runtime = str(item['runtime'] / 60)
+                runtime = str(int((item['runtime'] / 60.0) + 0.5))
                 studio = " / ".join(item['studio'])
                 tagline = item['tagline']
                 thumb = item['thumbnail']
@@ -240,7 +240,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 thumb = item['thumbnail']
                 banner = item['art'].get('banner', '')
                 poster = item['art'].get('poster', '')
-                path = path = 'videodb://2/2/' + str(item['tvshowid']) + '/'
+                tvshowid = str(item['tvshowid'])
+                path = path = 'videodb://tvshows/titles/' + tvshowid + '/'
                 year = str(item['year'])
                 listitem = xbmcgui.ListItem(label=tvshow, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
@@ -258,6 +259,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitem.setProperty( "starrating", starrating )
                 listitem.setProperty( "playcount", playcount )
                 listitem.setProperty( "path", path )
+                listitem.setProperty( "id", tvshowid )
                 listitems.append(listitem)
         self.getControl( 121 ).addItems( listitems )
         if count > 0:
@@ -280,7 +282,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 count = count + 1
                 episode = str(item['episode'])
                 fanart = item['fanart']
-                path = 'videodb://2/2/' + self.tvshowid + '/' + str(item['season']) + '/'
+                path = 'videodb://tvshows/titles/' + self.tvshowid + '/' + str(item['season']) + '/'
                 season = item['label']
                 playcount = str(item['playcount'])
                 thumb = item['thumbnail']
@@ -328,7 +330,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 episodenumber = "%.2d" % float(item['episode'])
                 path = item['file']
                 plot = item['plot']
-                runtime = str(item['runtime'] / 60)
+                runtime = str(int((item['runtime'] / 60.0) + 0.5))
                 premiered = item['firstaired']
                 rating = str(round(float(item['rating']),1))
                 starrating = 'rating%.1d.png' % round(float(rating)/2)
@@ -504,7 +506,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
             for item in json_response['result']['artists']:
                 artist = item['label']
                 count = count + 1
-                path = 'musicdb://2/' + str(item['artistid']) + '/'
+                artistid = str(item['artistid'])
+                path = 'musicdb://artists/' + artistid + '/'
                 born = item['born']
                 description = item['description']
                 died = item['died']
@@ -529,6 +532,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitem.setProperty( "artist_genre", genre )
                 listitem.setProperty( "artist_description", description )
                 listitem.setProperty( "path", path )
+                listitem.setProperty( "id", artistid )
                 listitems.append(listitem)
         self.getControl( 161 ).addItems( listitems )
         if count > 0:
@@ -564,7 +568,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         if not artist == self.artistname:
                             count = count - 1
                             return
-                path = 'musicdb://3/' + str(item['albumid']) + '/'
+                albumid = str(item['albumid'])
+                path = 'musicdb://albums/' + albumid + '/'
                 label = item['albumlabel']
                 description = item['description']
                 fanart = item['fanart']
@@ -597,6 +602,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitem.setProperty( "album_mood", mood )
                 listitem.setProperty( "year", year )
                 listitem.setProperty( "path", path )
+                listitem.setProperty( "id", albumid )
                 listitems.append(listitem)
         self.getControl( 171 ).addItems( listitems )
         if count > 0:
@@ -668,7 +674,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _getTvshow_Seasons( self ):
         self.fetch_seasonepisodes = 'true'
         listitem = self.getControl( 121 ).getSelectedItem()
-        self.tvshowid = listitem.getProperty('path')[14:-1]
+        self.tvshowid = listitem.getProperty('id')
         self.searchstring = listitem.getLabel().replace('(','[(]').replace(')','[)]').replace('+','[+]')
         self._reset_variables()
         self._hide_controls()
@@ -680,7 +686,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _getTvshow_Episodes( self ):
         self.fetch_seasonepisodes = 'true'
         listitem = self.getControl( 121 ).getSelectedItem()
-        self.tvshowid = listitem.getProperty('path')[14:-1]
+        self.tvshowid = listitem.getProperty('id')
         self.searchstring = listitem.getLabel().replace('(','[(]').replace(')','[)]').replace('+','[+]')
         self._reset_variables()
         self._hide_controls()
@@ -692,7 +698,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _getArtist_Albums( self ):
         self.fetch_albumssongs = 'true'
         listitem = self.getControl( 161 ).getSelectedItem()
-        self.artistid = listitem.getProperty('path')[12:-1]
+        self.artistid = listitem.getProperty('id')
         self.searchstring = listitem.getLabel().replace('(','[(]').replace(')','[)]').replace('+','[+]')
         self._reset_variables()
         self._hide_controls()
@@ -704,7 +710,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _getArtist_Songs( self ):
         self.fetch_albumssongs = 'true'
         listitem = self.getControl( 161 ).getSelectedItem()
-        self.artistid = listitem.getProperty('path')[12:-1]
+        self.artistid = listitem.getProperty('id')
         self.searchstring = listitem.getLabel().replace('(','[(]').replace(')','[)]').replace('+','[+]')
         self._reset_variables()
         self._hide_controls()
@@ -804,7 +810,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         elif controlId == 181:
             labels += ( xbmc.getLocalizedString(658), __language__(32206), )
             functions += ( self._showInfo, self._getSong_Album, )
-        context_menu = contextmenu.GUI( "script-globalsearch-contextmenu.xml" , __cwd__, "Default", area=( 0, 0, 1280, 720, ), labels=labels )
+        context_menu = contextmenu.GUI( "script-globalsearch-contextmenu.xml" , __cwd__, "Default", labels=labels )
         context_menu.doModal()
         if context_menu.selection is not None:
             functions[ context_menu.selection ]()
@@ -870,7 +876,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self._browse_audio(path)
             elif info_dialog.action == 'play_album':
                 listitem = self.getControl( 171 ).getSelectedItem()
-                self.albumid = listitem.getProperty('path')[12:-1]
+                self.albumid = listitem.getProperty('id')
                 self._play_album()
             elif info_dialog.action == 'browse_album':
                 listitem = self.getControl( 171 ).getSelectedItem()
@@ -917,7 +923,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self._browse_audio(path)
         elif controlId == 171:
             listitem = self.getControl( 171 ).getSelectedItem()
-            self.albumid = listitem.getProperty('path')[12:-1]
+            self.albumid = listitem.getProperty('id')
             self._play_album()
         elif controlId == 181:
             listitem = self.getControl( 181 ).getSelectedItem()

@@ -1,0 +1,6 @@
+config BR2_PACKAGE_XBMC_ADDON_SIMPLEJSON
+    bool "script.module.simplejson"
+    default y
+    help
+      Xbmc script.module.simplejson
+

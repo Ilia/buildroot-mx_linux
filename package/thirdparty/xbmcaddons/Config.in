@@ -5,11 +5,19 @@ comment "XBMC services"
 
 source "package/thirdparty/xbmcaddons/opensubtitles/Config.in"
 source "package/thirdparty/xbmcaddons/weather_underground/Config.in"
+source "package/thirdparty/xbmcaddons/skinwidgets/Config.in"
 
 comment "XBMC scripts"
 
 source "package/thirdparty/xbmcaddons/nm/Config.in"
 source "package/thirdparty/xbmcaddons/boxik_service/Config.in"
 source "package/thirdparty/xbmcaddons/xbmc_subtitles/Config.in"
+source "package/thirdparty/xbmcaddons/artistslideshow/Config.in"
+source "package/thirdparty/xbmcaddons/artwork/Config.in"
+source "package/thirdparty/xbmcaddons/simplejson/Config.in"
+
+comment "XBMC plugins"
+
+source "package/thirdparty/xbmcaddons/radio/Config.in"
 
 endmenu

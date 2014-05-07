@@ -1,3 +1,30 @@
+v2.0.8
+- add xml header
+
+v2.0.7
+- language update
+
+v2.0.6
+- language update
+
+v2.0.5
+- gotham release
+
+v2.0.4
+- more path fixes for gotham
+
+v2.0.3
+- db path changes for gotham
+
+v2.0.2
+- removed search by originaltitle as it's not supported in json
+
+v2.0.1
+- properly round runtime value
+
+v2.0.0
+- re-code the context menu
+
 v1.1.1
 - display runtime in minutes
 

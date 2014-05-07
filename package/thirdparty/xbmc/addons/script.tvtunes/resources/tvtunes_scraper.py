@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-__useragent__    ="Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/2008070208 Firefox/3.6"
-import urllib
 import os
 from traceback import print_exc
 import re
@@ -9,231 +7,162 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcvfs
-if sys.version_info < (2, 7):
-    import simplejson
-else:
-    import json as simplejson
+
 
 __addon__     = xbmcaddon.Addon(id='script.tvtunes')
 __addonid__   = __addon__.getAddonInfo('id')
 __language__  = __addon__.getLocalizedString
+__icon__      = __addon__.getAddonInfo('icon')
+__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
+__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
 
-def log(txt):
-    if isinstance (txt,str):
-        txt = txt.decode("utf-8")
-    message = u'%s: %s' % (__addonid__, txt)
-    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+sys.path.append(__resource__)
+sys.path.append(__lib__)
 
-try:
-    # parse sys.argv for params
-    params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
-except:
-    # no params passed
-    params = {} 
+# Import the common settings
+from settings import Settings
+from settings import log
+from settings import os_path_join
+from settings import os_path_split
+from settings import list_dir
+from settings import normalize_string
 
-def _unicode( text, encoding='utf-8' ):
-    try: text = unicode( text, encoding )
-    except: pass
-    return text
+from fetcher import TvTunesFetcher
 
-def normalize_string( text ):
-    try: text = unicodedata.normalize( 'NFKD', _unicode( text ) ).encode( 'ascii', 'ignore' )
-    except: pass
-    return text
 
-def get_html_source( url , save=False):
-    """ fetch the html source """
-    class AppURLopener(urllib.FancyURLopener):
-        version = __useragent__
-    urllib._urlopener = AppURLopener()
+###############################################################
+# Class to make it easier to see which screen is being checked
+###############################################################
+class WindowShowing():
 
-    try:
-        if os.path.isfile( url ): sock = open( url, "r" )
-        else:
-            urllib.urlcleanup()
-            sock = urllib.urlopen( url )
+    @staticmethod
+    def isMovieInformation():
+        return xbmc.getCondVisibility("Window.IsVisible(movieinformation)")
 
-        htmlsource = sock.read()
-        if save: file( os.path.join( CACHE_PATH , save ) , "w" ).write( htmlsource )
-        sock.close()
-        return htmlsource
-    except:
-        print_exc()
-        log( "### ERROR opening page %s" % url )
-        xbmcgui.Dialog().ok(__language__(32101) , __language__(32102))
+    @staticmethod
+    def isTv():
+        if xbmc.getCondVisibility("Container.Content(tvshows)"):
+            return True
+        if xbmc.getCondVisibility("Container.Content(Seasons)"):
+            return True
+        if xbmc.getCondVisibility("Container.Content(Episodes)"):
+            return True
+
+        folderPathId = "videodb://2/2/"
+        # The ID for the TV Show Title changed in Gotham
+        if Settings.getXbmcMajorVersion() > 12:
+            folderPathId = "videodb://tvshows/titles/"
+        if xbmc.getInfoLabel( "container.folderpath" ) == folderPathId:
+            return True # TvShowTitles
+        
         return False
 
-class TvTunes:
+
+#################################
+# Core TvTunes Scraper class
+#################################
+class TvTunesScraper:
     def __init__(self):
-        if not xbmcvfs.exists( xbmc.translatePath( 'special://profile/addon_data/%s' % __addonid__ ).decode("utf-8") ):
-            xbmcvfs.mkdir( xbmc.translatePath( 'special://profile/addon_data/%s' % __addonid__ ).decode("utf-8") )
-        if not xbmcvfs.exists( xbmc.translatePath( 'special://profile/addon_data/%s/temp' % __addonid__ ).decode("utf-8") ):
-            xbmcvfs.mkdir( xbmc.translatePath( 'special://profile/addon_data/%s/temp' % __addonid__ ).decode("utf-8") )
-        self.search_url = "http://www.televisiontunes.com/search.php?searWords=%s&Send=Search"
-        self.download_url = "http://www.televisiontunes.com/download.php?f=%s"
-        self.theme_file = "theme.mp3"
-        self.enable_custom_path = __addon__.getSetting("custom_path_enable")
-        self.exact_match = __addon__.getSetting('exact_match')
-        if self.enable_custom_path == "true":
-            self.custom_path = __addon__.getSetting("custom_path").decode("utf-8")
-        self.TVlist = self.listing()
-        self.DIALOG_PROGRESS = xbmcgui.DialogProgress()
-        self.ERASE = xbmcgui.Dialog().yesno(__language__(32103),__language__(32104))
-        self.DIALOG_PROGRESS.create( __language__(32105) , __language__(32106) )
-        if params.get("mode", "false" ) == "solo":
-            if self.enable_custom_path == "true":
-                tvshow = params.get("name", "" ).replace(":","")
-                tvshow = normalize_string( tvshow )
-                self.scan(normalize_string( params.get("name", "" ) ),os.path.join(self.custom_path, tvshow).decode("utf-8"))
-            else:
-                self.scan(normalize_string( params.get("name", "" ) ),params.get("path", "false" ).decode("utf-8"))
+        # Get the name of the theme we are looking for
+        videoItem = self.getSoloVideo()
+
+        # Check if multiple themes are suported
+        if not Settings.isMultiThemesSupported():
+            # Check if a theme already exists
+            if self._doesThemeExist(videoItem[1]):
+                # Prompt the user to see if we should overwrite the theme
+                if not xbmcgui.Dialog().yesno(__language__(32103),__language__(32104)):
+                    # No not want to overwrite, so quit
+                    log("TvTunesScraper: %s already exists" % ( os_path_join(videoItem[1],"theme.*")) )
+                    return
+        
+        # Perform the fetch
+        videoList = []
+        videoList.append(videoItem)
+        TvTunesFetcher(videoList)
+        
+    # Handles the case where there is just a single theme to look for
+    # and it has been invoked from the given video location
+    def getSoloVideo(self):
+        log("getSoloVideo: solo mode")
+        
+        # Used to pass the name and path via the command line
+        # This caused problems with non ascii characters, so now
+        # we just look at the screen details
+        # The solo option is only available from the info screen
+        # Looking at the TV Show information page
+        if WindowShowing.isTv():
+            videoName = xbmc.getInfoLabel( "ListItem.TVShowTitle" )
+            log("getSoloVideo: TV Show detected %s" % videoName)
         else:
-            self.scan()
-        self.DIALOG_PROGRESS.close()
+            videoName = xbmc.getInfoLabel( "ListItem.Title" )
+            log("getSoloVideo: Movie detected %s" % videoName)
 
-    def scan(self , cur_name=False , cur_path=False):
-        count = 0
-        if cur_name and cur_path: 
-            log( "### solo mode" )
-            log("####################### %s" % cur_name )
-            log("####################### %s" % cur_path )
-            self.TVlist = [[cur_name,cur_path]]
-        total = len(self.TVlist)
-        for show in self.TVlist:
-            count = count + 1
-            if not self.ERASE and xbmcvfs.exists(os.path.join(show[1],"theme.mp3")):
-                log( "### %s already exists, ERASE is set to %s" % ( os.path.join(show[1],"theme.mp3"), [False,True][self.ERASE] ) )
-            else:
-                self.DIALOG_PROGRESS.update( (count*100)/total , __language__(32107) + ' ' + show[0] , ' ')
-                if self.DIALOG_PROGRESS.iscanceled():
-                    self.DIALOG_PROGRESS.close()
-                    xbmcgui.Dialog().ok(__language__(32108),__language__(32109))
-                    break
-                theme_list = self.search_theme_list( show[0])
-                #log( theme_list )
-                if (len(theme_list) == 1) and (self.exact_match == 'true'): 
-                    theme_url = self.download_url % theme_list[0]["url"].replace("http://www.televisiontunes.com/", "").replace(".html" , "")
-                else:
-                    theme_url = self.get_user_choice( theme_list , show[0] )
-                if theme_url:
-                    self.download(theme_url , show[1])
+        # Now get the video path
+        videoPath = None
+        if WindowShowing.isMovieInformation() and WindowShowing.isTv():
+            videoPath = xbmc.getInfoLabel( "ListItem.FilenameAndPath" )
+        if videoPath == None or videoPath == "":
+            videoPath = xbmc.getInfoLabel( "ListItem.Path" )
+        log("getSoloVideo: Video Path %s" % videoPath)
 
-    def download(self , theme_url , path):
-        log( "### download :" + theme_url )
-        tmpdestination = xbmc.translatePath( 'special://profile/addon_data/%s/temp/%s' % ( __addonid__ , self.theme_file ) ).decode("utf-8")
-        destination = os.path.join( path , self.theme_file )
-        try:
-            def _report_hook( count, blocksize, totalsize ):
-                percent = int( float( count * blocksize * 100 ) / totalsize )
-                strProgressBar = str( percent )
-                self.DIALOG_PROGRESS.update( percent , __language__(32110) + ' ' + theme_url , __language__(32111) + ' ' + destination )
-            if not xbmcvfs.exists(path):
-                try:
-                    xbmcvfs.mkdir(path)
-                except:
-                    log( "problem with path: %s" % destination )
-            fp , h = urllib.urlretrieve( theme_url , tmpdestination , _report_hook )
-            log( h )
-            copy = xbmcvfs.copy(tmpdestination, destination)
-            if copy:
-                log( "### copy successful" )
-            else:
-                log( "### copy failed" )
-            xbmcvfs.delete(tmpdestination)
-            return True
-        except :
-            log( "### Theme download Failed !!!" )
-            print_exc()
-            return False 
 
-    def get_user_choice(self , theme_list , showname):
-        #### on cree la liste de choix de theme
-        theme_url = False
-        searchname = showname
-        searchdic = { "name" : "Manual Search..."}
-        theme_list.insert(0 , searchdic)
-        while theme_url == False:
-            select = xbmcgui.Dialog().select(__language__(32112) + ' ' + searchname, [ theme["name"] for theme in theme_list ])
-            if select == -1: 
-                log( "### Canceled by user" )
-                #xbmcgui.Dialog().ok("Canceled" , "Download canceled by user" )
-                return False
-            else:
-                if theme_list[select]["name"] == "Manual Search...":
-                    kb = xbmc.Keyboard(showname, __language__(32113), False)
-                    kb.doModal()
-                    result = kb.getText()
-                    theme_list = self.search_theme_list(result)
-                    searchname = result
-                    theme_list.insert(0 , searchdic)
-                else:
-                    theme_url = self.download_url % theme_list[select]["url"].replace("http://www.televisiontunes.com/", "").replace(".html" , "")
-                    log( "### %s" % theme_url )
-                    listitem = xbmcgui.ListItem(theme_list[select]["name"])
-                    listitem.setInfo('music', {'Title': theme_list[select]["name"]})
-                    xbmcgui.Window( 10025 ).setProperty( "TvTunesIsAlive", "true" )
-                    xbmc.Player().play(theme_url, listitem)
-                    ok = xbmcgui.Dialog().yesno(__language__(32103),__language__(32114))
-                    if not ok: theme_url = False
-                    xbmc.executebuiltin('PlayerControl(Stop)')
-                    xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
+        normVideoName = normalize_string( videoName )
+        log("getSoloVideo: videoName = %s" % normVideoName )
 
-        return theme_url
+        if Settings.isCustomPathEnabled():
+            videoPath = os_path_join(Settings.getCustomPath(), normVideoName)
+        else:
+            log("getSoloVideo: Solo dir = %s" % videoPath)
+            # Need to clean the path if we are going to store the file there
+            # Handle stacked files that have a custom file name format
+            if videoPath.startswith("stack://"):
+                videoPath = videoPath.replace("stack://", "").split(" , ", 1)[0]
+            # Need to remove the filename from the end  as we just want the directory
+            # if not os.path.isdir(videoPath):
+            fileExt = os.path.splitext( videoPath )[1]
+            # If this is a file, then get it's parent directory
+            if fileExt != None and fileExt != "":
+                videoPath = os.path.dirname( videoPath )
 
-    def search_theme_list(self , showname):
-        log( "### Search for %s" % showname )
-        theme_list = []
-        next = True
-        url = self.search_url % urllib.quote_plus(showname)
-        urlpage = ""
-        while next == True:
-            ### on recup le result de la recherche
-            data = get_html_source( url + urlpage )
-            log( "### Search url: %s" % ( url + urlpage ) )
-            ###on parse la recherche pour renvoyer une liste de dico
-            match = re.search(r"1\.&nbsp;(.*)<br>", data)
-            if match: data2 = re.findall('<a href="(.*?)">(.*?)</a>', match.group(1))
-            else: 
-                log( "no theme found for %s" % showname )
-                data2 = ""
-            for i in data2:
-                theme = {}
-                theme["url"] = i[0] or ""
-                theme["name"] = i[1] or ""
-                # in case of an exact match (when enabled) only return this theme
-                if self.exact_match == 'true' and theme["name"] == showname:
-                    theme_list = []
-                    theme_list.append(theme)
-                    return theme_list
-                else:
-                    theme_list.append(theme)
-            match = re.search(r'&search=Search(&page=\d)"><b>Next</b>', data)
-            if match:
-            	urlpage = match.group(1)
-            else:
-            	next = False
-            log( "### next page: %s" % next )
-        return theme_list
+        log("getSoloVideo: videoPath = %s" % videoPath )
+        return [normVideoName,videoPath.decode("utf-8"),normVideoName]
 
-    def listing(self):
-        # on recup la liste des series en biblio
-        # json statement for tv shows
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "file"], "sort": { "method": "title" } }, "id": 1}')
-        json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
-        log( json_response )
-        TVlist = []
-        if json_response['result'].has_key('tvshows'):
-            for item in json_response['result']['tvshows']:
-                tvshow = item['title'].replace(":","")
-                tvshow = normalize_string( tvshow )
-                if self.enable_custom_path == "true":
-                    path = os.path.join(self.custom_path, tvshow).decode("utf-8")
-                else:
-                    path = item['file']
-                TVlist.append( ( tvshow , path ) )
-        return TVlist   
-              
+
+    # Checks if a theme exists in a directory
+    def _doesThemeExist(self, directory):
+        log("doesThemeExist: Checking directory: %s" % directory)
+        # Check for custom theme directory
+        if Settings.isThemeDirEnabled():
+            themeDir = os_path_join(directory, Settings.getThemeDirectory())
+            # Check if this directory exists
+            if not xbmcvfs.exists(themeDir):
+                workingPath = directory
+                # If the path currently ends in the directory separator
+                # then we need to clear an extra one
+                if (workingPath[-1] == os.sep) or (workingPath[-1] == os.altsep):
+                    workingPath = workingPath[:-1]
+                # If not check to see if we have a DVD VOB
+                if (os_path_split(workingPath)[1] == 'VIDEO_TS') or (os_path_split(workingPath)[1] == 'BDMV'):
+                    # Check the parent of the DVD Dir
+                    themeDir = os_path_split(workingPath)[0]
+                    themeDir = os_path_join(themeDir, Settings.getThemeDirectory())
+            directory = themeDir
+
+        # check if the directory exists before searching
+        if xbmcvfs.exists(directory):
+            # Generate the regex
+            themeFileRegEx = Settings.getThemeFileRegEx()
+
+            dirs, files = list_dir( directory )
+            for aFile in files:
+                m = re.search(themeFileRegEx, aFile, re.IGNORECASE)
+                if m:
+                    log("doesThemeExist: Found match: " + aFile)
+                    return True
+        return False
+
+
 if ( __name__ == "__main__" ):
-    TvTunes()
-    xbmcgui.Dialog().ok(__language__(32115),__language__(32116) , __language__(32117))
+    TvTunesScraper()
