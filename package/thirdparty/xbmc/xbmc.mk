@@ -73,7 +73,7 @@ XBMC_ADV_SETTINGS = package/thirdparty/xbmc/settings/advancedsettings.xml
 endif
 
 ifneq ($(BR2_XBMC_GUI_SETTINGS),"")
-XBMC_GUI_SETTINGS = package/thirdparty/xbmc/settings/$(call qstrip,$(BR2_XBMC_GUI_SETTINGS))_guisettings.xml
+XBMC_GUI_SETTINGS = package/thirdparty/xbmc/settings/$(call qstrip,$(BR2_XBMC_GUI_SETTINGS))_settings.xml
 endif
 
 ifneq ($(BR2_XBMC_DEFAULT_SKIN),"")
@@ -157,7 +157,7 @@ define XBMC_INSTALL_SETTINGS
 endef
 
 define XBMC_INSTALL_GUI_SETTINGS
-  cp -f $(XBMC_GUI_SETTINGS) $(TARGET_DIR)/usr/share/xbmc/system/guisettings.xml
+  cp -f $(XBMC_GUI_SETTINGS) $(XBMC_DIR)/system/settings/settings.xml
 endef
 
 define XBMC_INSTALL_KEYMAP
