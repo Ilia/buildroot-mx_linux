@@ -72,6 +72,10 @@ else
 XBMC_ADV_SETTINGS = package/thirdparty/xbmc/settings/advancedsettings.xml
 endif
 
+ifneq ($(BR2_XBMC_GUI_SETTINGS),"")
+XBMC_GUI_SETTINGS = package/thirdparty/xbmc/settings/$(call qstrip,$(BR2_XBMC_GUI_SETTINGS))_guisettings.xml
+endif
+
 ifneq ($(BR2_XBMC_DEFAULT_SKIN),"")
 XBMC_DEFAULT_SKIN = skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))
 else
@@ -152,6 +156,10 @@ define XBMC_INSTALL_SETTINGS
   cp -f $(XBMC_ADV_SETTINGS) $(TARGET_DIR)/usr/share/xbmc/system/advancedsettings.xml
 endef
 
+define XBMC_INSTALL_GUI_SETTINGS
+  cp -f $(XBMC_GUI_SETTINGS) $(TARGET_DIR)/usr/share/xbmc/system/guisettings.xml
+endef
+
 define XBMC_INSTALL_KEYMAP
   cp -f $(XBMC_KEYMAP) $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
   cp -f package/thirdparty/xbmc/keymaps/nobs.xml $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
@@ -224,6 +232,10 @@ XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_BUILD_VERSION
 
 ifneq ($(BR2_ENABLE_DEBUG),y)
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_STRIP_BINARIES
+endif
+
+ifneq ($(BR2_XBMC_GUI_SETTINGS),"")
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_GUI_SETTINGS
 endif
 
 ifneq ($(XBMC_MEDIA_FOLDER),"")
