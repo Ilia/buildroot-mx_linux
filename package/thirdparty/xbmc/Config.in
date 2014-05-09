@@ -123,6 +123,15 @@ config BR2_XBMC_KEYMAP
 		- Keymap should be located in "package/thirdparty/xbmc/keymaps"
 		- Compiler will append ".xml" to end of file name
 
+config BR2_XBMC_TIMEZONE
+	string "System Timezone for XBMC"
+	default ""
+	help
+          This option will set the system timezone in /etc/timezone
+
+	  NOTES:
+		- if this option is not you will need to manually set timezone
+
 config BR2_XBMC_GUI_SETTINGS
         string "GUI settings"
         default ""

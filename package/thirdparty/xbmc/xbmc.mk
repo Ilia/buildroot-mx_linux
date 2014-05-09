@@ -76,6 +76,10 @@ ifneq ($(BR2_XBMC_GUI_SETTINGS),"")
 XBMC_GUI_SETTINGS = package/thirdparty/xbmc/settings/$(call qstrip,$(BR2_XBMC_GUI_SETTINGS))_settings.xml
 endif
 
+ifneq ($(BR2_XBMC_TIMEZONE),"")
+XBMC_TIMEZONE = BR2_XBMC_TIMEZONE
+endif
+
 ifneq ($(BR2_XBMC_DEFAULT_SKIN),"")
 XBMC_DEFAULT_SKIN = skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))
 else
@@ -146,6 +150,10 @@ endef
 
 define XBMC_INSTALL_ETC
   cp -rf package/thirdparty/xbmc/etc $(TARGET_DIR)
+endef
+
+define XBMC_INSTALL_TIMEZONE
+  echo $(XBMC_TIMEZONE) >> $(TARGET_DIR)/etc/timezone 
 endef
 
 define XBMC_BUILD_VERSION
@@ -237,6 +245,10 @@ endif
 
 ifneq ($(BR2_XBMC_GUI_SETTINGS),"")
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_GUI_SETTINGS
+endif
+
+ifneq ($(BR2_XBMC_TIMEZONE),"")
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_TIMEZONE
 endif
 
 ifneq ($(XBMC_MEDIA_FOLDER),"")
