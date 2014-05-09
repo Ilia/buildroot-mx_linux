@@ -158,6 +158,7 @@ endef
 
 define XBMC_INSTALL_GUI_SETTINGS
   cp -f $(XBMC_GUI_SETTINGS) $(XBMC_DIR)/system/settings/settings.xml
+  cp -f $(XBMC_GUI_SETTINGS) $(TARGET_DIR)/usr/share/xbmc/system/settings/settings.xml
 endef
 
 define XBMC_INSTALL_KEYMAP
