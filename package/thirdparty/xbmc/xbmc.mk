@@ -158,6 +158,7 @@ endef
 
 define XBMC_BUILD_VERSION
   cp -f package/thirdparty/xbmc/version $(TARGET_DIR)/usr/share/xbmc/system/
+  cp -f package/thirdparty/xbmc/model $(TARGET_DIR)/usr/share/xbmc/system/
 endef
 
 define XBMC_INSTALL_SETTINGS
