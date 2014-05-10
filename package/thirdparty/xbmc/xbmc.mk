@@ -77,7 +77,7 @@ XBMC_GUI_SETTINGS = package/thirdparty/xbmc/settings/$(call qstrip,$(BR2_XBMC_GU
 endif
 
 ifneq ($(BR2_XBMC_TIMEZONE),"")
-XBMC_TIMEZONE = BR2_XBMC_TIMEZONE
+XBMC_TIMEZONE = $(call qstrip,$(BR2_XBMC_TIMEZONE))
 endif
 
 ifneq ($(BR2_XBMC_DEFAULT_SKIN),"")
