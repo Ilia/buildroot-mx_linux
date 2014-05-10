@@ -2148,7 +2148,7 @@
         </setting>
         <setting id="services.esallinterfaces" type="boolean" label="794" help="36338">
           <level>1</level>
-          <default>false</default>
+          <default>true</default>
           <dependencies>
             <dependency type="enable" setting="services.esenabled">true</dependency>
           </dependencies>
@@ -2382,9 +2382,9 @@
         <setting id="audiooutput.channels" type="integer" label="34100" help="36362">
           <level>0</level>
           <default>1</default> <!-- AE_CH_LAYOUT_2_0 -->
-          <dependencies>
+          <!-- dependencies>
             <dependency type="visible" on="property" name="aesettingvisible" setting="audiooutput.audiodevice">audiooutput.channels</dependency>
-          </dependencies>
+          </dependencies -->
           <constraints>
             <options>
               <option label="34101">1</option> <!-- AE_CH_LAYOUT_2_0 -->
@@ -2484,20 +2484,20 @@
         <setting id="audiooutput.passthrough" type="boolean" label="348" help="36368">
           <level>2</level>
           <default>false</default>
-          <dependencies>
+          <!-- dependencies>
             <dependency type="visible">
               <and>
                 <condition on="property" name="aesettingvisible" setting="audiooutput.audiodevice">audiooutput.passthrough</condition>
                 <condition on="property" name="aesettingvisible" setting="audiooutput.config">audiooutput.passthrough</condition>
               </and>
             </dependency>
-          </dependencies>
+          </dependencies -->
           <control type="toggle" />
         </setting>
         <setting id="audiooutput.passthroughdevice" type="string" label="546" help="36372">
           <level>2</level>
           <default>Default</default> <!-- will be properly set on startup -->
-          <dependencies>
+          <!-- dependencies>
             <dependency type="visible">
               <and>
                 <condition on="property" name="aesettingvisible" setting="audiooutput.passthrough">audiooutput.passthrough</condition>
@@ -2505,7 +2505,7 @@
               </and>
             </dependency>
             <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
-          </dependencies>
+          </dependencies -->
           <constraints>
             <options>audiodevicespassthrough</options>
           </constraints>
@@ -2556,10 +2556,10 @@
         <setting id="audiooutput.dtspassthrough" type="boolean" label="254" help="36366">
           <level>2</level>
           <default>false</default>
-          <dependencies>
+          <!-- dependencies>
             <dependency type="visible" on="property" name="aesettingvisible" setting="audiooutput.config">audiooutput.passthrough</dependency>
             <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
-          </dependencies>
+          </dependencies -->
           <control type="toggle" />
         </setting>
         <setting id="audiooutput.truehdpassthrough" type="boolean" label="349" help="36369">
