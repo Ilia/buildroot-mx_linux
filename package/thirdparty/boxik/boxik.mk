@@ -1,4 +1,4 @@
-BOXIK_VERSION = 2ec015f5c91e2c56270a23f1339d4806f0e286dc
+BOXIK_VERSION = gotham
 BOXIK_SITE_METHOD = git
 BOXIK_SITE = https://github.com/Ilia/skin.boxik.git
 BOXIK_INSTALL_STAGING = YES
