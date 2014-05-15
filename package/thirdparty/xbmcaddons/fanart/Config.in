@@ -1,0 +1,6 @@
+config BR2_PACKAGE_XBMC_ADDON_FANART
+    bool "service.skin.fanart"
+    default y
+    help
+      Xbmc Fanart addon
+
