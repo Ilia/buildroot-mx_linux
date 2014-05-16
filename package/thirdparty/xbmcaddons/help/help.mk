@@ -4,7 +4,6 @@
 #
 ###############################################################################
 HELP_VERSION = master
-HELP_SOURCE = plugin.video.boxik.channel-$(HELP_VERSION).tar.gz
 HELP_SITE = https://github.com/Ilia/plugin.video.boxik.channel.git
 HELP_SITE_METHOD = git
 HELP_INSTALL_STAGING = NO
