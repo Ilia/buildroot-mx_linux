@@ -1,5 +1,6 @@
 config BR2_PACKAGE_XBMC_ADDON_BOXIK_SERVICE
     bool "boxik_service"
+    default y 
     help
       Xbmc BOXiK Service Addon
 
