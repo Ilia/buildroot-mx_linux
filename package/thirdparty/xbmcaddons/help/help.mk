@@ -4,6 +4,7 @@
 #
 ###############################################################################
 HELP_VERSION = master
+HELP_SOURCE = xbmc-plugin.video.boxik.channel-$(HELP_VERSION).zip
 HELP_SITE = https://github.com/Ilia/plugin.video.boxik.channel.git
 HELP_SITE_METHOD = git
 HELP_INSTALL_STAGING = NO

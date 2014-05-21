@@ -4,7 +4,7 @@
 #
 ###############################################################################
 SKINWIDGETS_VERSION = aa553dd3cdd3492910247850badace906aa97867
-SKINWIDGETS_SOURCE = service.skin.widgets-$(SKINWIDGETS_VERSION).tar.gz
+SKINWIDGETS_SOURCE = xbmc-service.skin.widgets-$(SKINWIDGETS_VERSION).tar.gz
 SKINWIDGETS_SITE = https://github.com/XBMC-Addons/service.skin.widgets.git
 SKINWIDGETS_SITE_METHOD = git
 SKINWIDGETS_INSTALL_STAGING = NO

@@ -4,7 +4,7 @@
 #
 ###############################################################################
 FAVOURITES_VERSION = 5.0.2
-FAVOURITES_SOURCE = script.favourites-$(FAVOURITES_VERSION).zip
+FAVOURITES_SOURCE = xbmc-script.favourites-$(FAVOURITES_VERSION).zip
 FAVOURITES_SITE = http://mirrors.xbmc.org/addons/gotham/script.favourites/
 FAVOURITES_INSTALL_STAGING = NO
 FAVOURITES_INSTALL_TARGET = YES

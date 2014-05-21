@@ -4,7 +4,7 @@
 #
 ###############################################################################
 RADIO_VERSION = 05910611d9b0e61ef4f44e0542df57340975237d
-RADIO_SOURCE = plugin.audio.radio_de-$(RADIO_VERSION).tar.gz
+RADIO_SOURCE = xbmc-plugin.audio.radio_de-$(RADIO_VERSION).tar.gz
 RADIO_SITE = https://github.com/dersphere/plugin.audio.radio_de.git
 RADIO_SITE_METHOD = git
 RADIO_INSTALL_STAGING = NO

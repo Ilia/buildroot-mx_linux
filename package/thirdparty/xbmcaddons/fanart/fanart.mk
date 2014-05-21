@@ -4,6 +4,7 @@
 #
 ###############################################################################
 FANART_VERSION = master
+FANART_SOURCE = xbmc-service.skin.fanart-$(FANART_VERSION).zip 
 FANART_SITE = https://github.com/Ilia/service.skin.fanart.git
 FANART_SITE_METHOD = git
 FANART_INSTALL_STAGING = NO

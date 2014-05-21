@@ -4,7 +4,7 @@
 #
 ###############################################################################
 XBMCBACKUP_VERSION = 0.4.7
-XBMCBACKUP_SOURCE = script.xbmcbackup-$(XBMCBACKUP_VERSION).zip
+XBMCBACKUP_SOURCE = xbmc-script.xbmcbackup-$(XBMCBACKUP_VERSION).zip
 XBMCBACKUP_SITE = http://mirrors.xbmc.org/addons/frodo/script.xbmcbackup/
 XBMCBACKUP_INSTALL_STAGING = NO
 XBMCBACKUP_INSTALL_TARGET = YES

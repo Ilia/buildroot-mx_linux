@@ -4,7 +4,7 @@
 #
 ###############################################################################
 SIMPLE_DOWNLOADER_VERSION = 1.9.4
-SIMPLE_DOWNLOADER_SOURCE = script.module.simple.downloader-$(SIMPLE_DOWNLOADER_VERSION).zip
+SIMPLE_DOWNLOADER_SOURCE = xbmc-script.module.simple.downloader-$(SIMPLE_DOWNLOADER_VERSION).zip
 SIMPLE_DOWNLOADER_SITE = http://mirrors.xbmc.org/addons/frodo/script.module.simple.downloader/
 SIMPLE_DOWNLOADER_INSTALL_STAGING = NO
 SIMPLE_DOWNLOADER_INSTALL_TARGET = YES

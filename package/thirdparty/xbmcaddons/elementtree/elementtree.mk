@@ -4,7 +4,7 @@
 #
 ###############################################################################
 ELEMENTTREE_VERSION = 1.2.8
-ELEMENTTREE_SOURCE = script.module.elementtree-$(ELEMENTTREE_VERSION).zip
+ELEMENTTREE_SOURCE = xbmc-script.module.elementtree-$(ELEMENTTREE_VERSION).zip
 ELEMENTTREE_SITE = http://mirrors.xbmc.org/addons/frodo/script.module.elementtree/
 ELEMENTTREE_INSTALL_STAGING = NO
 ELEMENTTREE_INSTALL_TARGET = YES

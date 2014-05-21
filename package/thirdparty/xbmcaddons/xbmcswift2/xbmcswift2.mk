@@ -4,7 +4,7 @@
 #
 ###############################################################################
 XBMCSWIFT2_VERSION = 2.4.0
-XBMCSWIFT2_SOURCE = script.module.xbmcswift2-$(XBMCSWIFT2_VERSION).zip
+XBMCSWIFT2_SOURCE = xbmc-script.module.xbmcswift2-$(XBMCSWIFT2_VERSION).zip
 XBMCSWIFT2_SITE = http://mirrors.xbmc.org/addons/frodo/script.module.xbmcswift2/
 XBMCSWIFT2_INSTALL_STAGING = NO
 XBMCSWIFT2_INSTALL_TARGET = YES

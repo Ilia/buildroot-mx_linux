@@ -4,7 +4,7 @@
 #
 ###############################################################################
 SIMPLEJSON_VERSION = f99c5d76522eac740b7c4afc212cb377b2d8b2fb
-SIMPLEJSON_SOURCE = script.module.simplejson-$(SIMPLEJSON_VERSION).tar.gz
+SIMPLEJSON_SOURCE = xbmc-script.module.simplejson-$(SIMPLEJSON_VERSION).tar.gz
 SIMPLEJSON_SITE = https://github.com/XBMC-Addons/script.module.simplejson.git
 SIMPLEJSON_SITE_METHOD = git
 SIMPLEJSON_INSTALL_STAGING = NO

@@ -4,7 +4,7 @@
 #
 ###############################################################################
 ARTISTSLIDESHOW_VERSION = fa278ca2af0294ef8f5e1581b87e5a0c1e1d8174
-ARTISTSLIDESHOW_SOURCE = script.artistslideshow-$(ARTISTSLIDESHOW_VERSION).tar.gz
+ARTISTSLIDESHOW_SOURCE = xbmc-script.artistslideshow-$(ARTISTSLIDESHOW_VERSION).tar.gz
 ARTISTSLIDESHOW_SITE = https://github.com/pkscout/script.artistslideshow.git
 ARTISTSLIDESHOW_SITE_METHOD = git
 ARTISTSLIDESHOW_INSTALL_STAGING = NO
