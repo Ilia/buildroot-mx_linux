@@ -9,6 +9,7 @@ source "package/thirdparty/xbmcaddons/weather_underground/Config.in"
 
 comment "XBMC scripts"
 
+source "package/thirdparty/xbmcaddons/cinex/Config.in"
 source "package/thirdparty/xbmcaddons/parsedom/Config.in"
 source "package/thirdparty/xbmcaddons/nm/Config.in"
 source "package/thirdparty/xbmcaddons/boxik_service/Config.in"

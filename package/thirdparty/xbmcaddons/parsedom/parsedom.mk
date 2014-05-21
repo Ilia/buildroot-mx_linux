@@ -9,11 +9,11 @@ PARSEDOM_SITE = http://mirrors.xbmc.org/addons/frodo/script.module.parsedom/
 PARSEDOM_INSTALL_STAGING = NO
 PARSEDOM_INSTALL_TARGET = YES
 
-define EXTRACT_CMDS
+define PARSEDOM_EXTRACT_CMDS
 	unzip $(DL_DIR)/$(PARSEDOM_SOURCE) -d $(@D)
 endef
 
-define INSTALL_TARGET_CMDS
+define PARSEDOM_INSTALL_TARGET_CMDS
 	cp -rf $(@D)/script.module.parsedom $(TARGET_DIR)/usr/share/xbmc/addons/
 endef
 
