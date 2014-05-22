@@ -4,7 +4,7 @@
 #
 ###############################################################################
 GLOBALSEARCH_VERSION = 2.0.8
-GLOBALSEARCH_SOURCE = xbmc-script.globalsearch-$(GLOBALSEARCH_VERSION).zip
+GLOBALSEARCH_SOURCE = script.globalsearch-$(GLOBALSEARCH_VERSION).zip
 GLOBALSEARCH_SITE = http://mirrors.xbmc.org/addons/gotham/script.globalsearch/
 GLOBALSEARCH_INSTALL_STAGING = NO
 GLOBALSEARCH_INSTALL_TARGET = YES

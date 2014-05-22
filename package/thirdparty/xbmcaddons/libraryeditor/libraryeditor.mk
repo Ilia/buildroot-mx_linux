@@ -4,7 +4,6 @@
 #
 ###############################################################################
 LIBRARYEDITOR_VERSION = 7ba506c4be3577e02f0286414a1685f5d90cf9d3
-LIBRARYEDITOR_SOURCE = xbmc-script.libraryeditor-$(LIBRARYEDITOR_VERSION).zip
 LIBRARYEDITOR_SITE = https://github.com/phil65/script.libraryeditor.git
 LIBRARYEDITOR_SITE_METHOD = git
 LIBRARYEDITOR_INSTALL_STAGING = NO

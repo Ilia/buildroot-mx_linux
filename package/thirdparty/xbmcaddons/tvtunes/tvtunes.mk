@@ -4,7 +4,7 @@
 #
 ###############################################################################
 TVTUNES_VERSION = 4.4.3
-TVTUNES_SOURCE = xbmc-script.tvtunes-$(TVTUNES_VERSION).zip
+TVTUNES_SOURCE = script.tvtunes-$(TVTUNES_VERSION).zip
 TVTUNES_SITE = http://mirrors.xbmc.org/addons/frodo/script.tvtunes/
 TVTUNES_INSTALL_STAGING = NO
 TVTUNES_INSTALL_TARGET = YES

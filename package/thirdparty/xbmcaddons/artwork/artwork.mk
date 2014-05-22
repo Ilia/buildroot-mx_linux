@@ -4,7 +4,7 @@
 #
 ###############################################################################
 ARTWORK_VERSION = e93b0e996e8003a55a199ae27f28ca027c3e1d4e
-ARTWORK_SOURCE = xbmc-script.artwork.downloader-$(ARTWORK_VERSION).tar.gz
+ARTWORK_SOURCE = script.artwork.downloader-$(ARTWORK_VERSION).tar.gz
 ARTWORK_SITE = https://github.com/XBMC-Addons/script.artwork.downloader.git
 ARTWORK_SITE_METHOD = git
 ARTWORK_INSTALL_STAGING = NO

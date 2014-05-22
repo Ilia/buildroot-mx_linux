@@ -4,7 +4,6 @@
 #
 ###############################################################################
 BOXIK_SERVICE_VERSION = master
-BOXIK_SERVICE_SOURCE = xbmc-service.boxik.firmware-$(BOXIK_SERVICE_VERSION).tar.gz
 BOXIK_SERVICE_SITE = https://github.com/Ilia/service.boxik.firmware.git
 BOXIK_SERVICE_SITE_METHOD = git
 BOXIK_SERVICE_INSTALL_STAGING = NO

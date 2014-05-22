@@ -4,7 +4,7 @@
 #
 ###############################################################################
 REQUESTS2_VERSION = 2.2.1
-REQUESTS2_SOURCE = xbmc-script.module.requests2-$(REQUESTS2_VERSION).zip
+REQUESTS2_SOURCE = script.module.requests2-$(REQUESTS2_VERSION).zip
 REQUESTS2_SITE = http://mirrors.xbmc.org/addons/frodo/script.module.requests2/
 REQUESTS2_INSTALL_STAGING = NO
 REQUESTS2_INSTALL_TARGET = YES

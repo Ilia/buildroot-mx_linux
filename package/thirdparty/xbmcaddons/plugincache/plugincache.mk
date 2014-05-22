@@ -4,7 +4,7 @@
 #
 ###############################################################################
 PLUGINCACHE_VERSION = 2.5.4
-PLUGINCACHE_SOURCE = xbmc-script.common.plugin.cache-$(PLUGINCACHE_VERSION).zip
+PLUGINCACHE_SOURCE = script.common.plugin.cache-$(PLUGINCACHE_VERSION).zip
 PLUGINCACHE_SITE = http://mirrors.xbmc.org/addons/frodo/script.common.plugin.cache/
 PLUGINCACHE_INSTALL_STAGING = NO
 PLUGINCACHE_INSTALL_TARGET = YES

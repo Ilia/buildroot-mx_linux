@@ -4,13 +4,13 @@
 #
 ###############################################################################
 CINEX_VERSION = 4.0.10
-CINEX_SOURCE = xbmc-script.cinema.experience-$(CINEX_VERSION).zip
+CINEX_SOURCE = script.cinema.experience-$(CINEX_VERSION).zip
 CINEX_SITE = http://mirrors.xbmc.org/addons/gotham/script.cinema.experience/
 CINEX_INSTALL_STAGING = NO
 CINEX_INSTALL_TARGET = YES
 
 define CINEX_EXTRACT_CMDS
-	unzip $(DL_DIR)/$(CINEX_SOURCE) -d $(@D)
+	unzip $(DL_DIR)/$(FAVOURITES_SOURCE) -d $(@D)
 endef
 
 define CINEX_INSTALL_TARGET_CMDS

@@ -4,7 +4,7 @@
 #
 ###############################################################################
 MECHANIZE_VERSION = 0.2.6
-MECHANIZE_SOURCE = xbmc-script.module.mechanize-$(MECHANIZE_VERSION).zip
+MECHANIZE_SOURCE = script.module.mechanize-$(MECHANIZE_VERSION).zip
 MECHANIZE_SITE = http://mirrors.xbmc.org/addons/frodo/script.module.mechanize/
 MECHANIZE_INSTALL_STAGING = NO
 MECHANIZE_INSTALL_TARGET = YES

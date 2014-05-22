@@ -4,7 +4,7 @@
 #
 ###############################################################################
 YOUTUBE_VERSION = 4.4.6
-YOUTUBE_SOURCE = xbmc-plugin.video.youtube-$(YOUTUBE_VERSION).zip
+YOUTUBE_SOURCE = plugin.video.youtube-$(YOUTUBE_VERSION).zip
 YOUTUBE_SITE = http://mirrors.xbmc.org/addons/frodo/plugin.video.youtube/
 YOUTUBE_INSTALL_STAGING = NO
 YOUTUBE_INSTALL_TARGET = YES

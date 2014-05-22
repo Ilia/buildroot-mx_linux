@@ -4,7 +4,7 @@
 #
 ###############################################################################
 NEXTAIRED_VERSION = 6.0.10
-NEXTAIRED_SOURCE = xbmc-script.tv.show.next.aired-$(NEXTAIRED_VERSION).zip
+NEXTAIRED_SOURCE = script.tv.show.next.aired-$(NEXTAIRED_VERSION).zip
 NEXTAIRED_SITE = http://mirrors.xbmc.org/addons/frodo/script.tv.show.next.aired/
 NEXTAIRED_INSTALL_STAGING = NO
 NEXTAIRED_INSTALL_TARGET = YES

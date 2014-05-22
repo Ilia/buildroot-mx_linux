@@ -4,7 +4,7 @@
 #
 ###############################################################################
 PLAYALBUM_VERSION = 0.1.3
-PLAYALBUM_SOURCE = xbmc-script.playalbum-$(PLAYALBUM_VERSION).zip
+PLAYALBUM_SOURCE = script.playalbum-$(PLAYALBUM_VERSION).zip
 PLAYALBUM_SITE = http://mirrors.xbmc.org/addons/frodo/script.playalbum/
 PLAYALBUM_INSTALL_STAGING = NO
 PLAYALBUM_INSTALL_TARGET = YES

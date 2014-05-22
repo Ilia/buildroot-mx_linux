@@ -4,7 +4,7 @@
 #
 ###############################################################################
 NM_VERSION = boxik
-NM_SOURCE = xbmc-nm-$(NM_VERSION).tar.gz
+NM_SOURCE = nm-$(NM_VERSION).tar.gz
 NM_SITE = https://github.com/Ilia/script.mxlinux.wifimanager.git
 NM_SITE_METHOD = git
 NM_INSTALL_STAGING = NO

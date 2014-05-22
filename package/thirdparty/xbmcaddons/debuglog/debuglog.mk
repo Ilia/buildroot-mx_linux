@@ -4,7 +4,7 @@
 #
 ###############################################################################
 DEBUGLOG_VERSION = 12.0.2
-DEBUGLOG_SOURCE = xbmc-script.xbmc.debug.log-$(DEBUGLOG_VERSION).zip
+DEBUGLOG_SOURCE = script.xbmc.debug.log-$(DEBUGLOG_VERSION).zip
 DEBUGLOG_SITE = http://mirrors.xbmc.org/addons/frodo/script.xbmc.debug.log/
 DEBUGLOG_INSTALL_STAGING = NO
 DEBUGLOG_INSTALL_TARGET = YES

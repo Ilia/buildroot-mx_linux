@@ -4,7 +4,7 @@
 #
 ###############################################################################
 HDTRAILERS_NET_VERSION = 1.2.2
-HDTRAILERS_NET_SOURCE = xbmc-plugin.video.hdtrailers_net-$(HDTRAILERS_NET_VERSION).zip
+HDTRAILERS_NET_SOURCE = plugin.video.hdtrailers_net-$(HDTRAILERS_NET_VERSION).zip
 HDTRAILERS_NET_SITE = http://mirrors.xbmc.org/addons/frodo/plugin.video.hdtrailers_net/
 HDTRAILERS_NET_INSTALL_STAGING = NO
 HDTRAILERS_NET_INSTALL_TARGET = YES

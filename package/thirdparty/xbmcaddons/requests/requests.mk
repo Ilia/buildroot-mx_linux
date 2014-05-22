@@ -4,7 +4,7 @@
 #
 ###############################################################################
 REQUESTS_VERSION = 1.1.0
-REQUESTS_SOURCE = xbmc-script.module.requests-$(REQUESTS_VERSION).zip
+REQUESTS_SOURCE = script.module.requests-$(REQUESTS_VERSION).zip
 REQUESTS_SITE = http://mirrors.xbmc.org/addons/frodo/script.module.requests/
 REQUESTS_INSTALL_STAGING = NO
 REQUESTS_INSTALL_TARGET = YES
