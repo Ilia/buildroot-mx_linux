@@ -1,0 +1,15 @@
+--- a/plugin.video.youtube/default.py	2014-05-24 11:33:33.000000000 +1000
++++ b/plugin.video.youtube/default.py	2014-05-24 11:57:58.000000000 +1000
+@@ -107,6 +107,12 @@
+     import YouTubeNavigation
+     navigation = YouTubeNavigation.YouTubeNavigation()
+ 
++    if sys.argv[2]:
++        prm = common.getParameters(sys.argv[2]).get
++        if not settings.getSetting("firstrun") and prm("bypass_firstrun"):
++            settings.setSetting("firstrun", "1")
++        del prm
++   
+     if (not settings.getSetting("firstrun")):
+         login.login()
+         settings.setSetting("firstrun", "1")
