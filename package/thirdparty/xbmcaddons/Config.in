@@ -1,4 +1,4 @@
-aenu "XBMC addons"
+menu "XBMC addons"
     depends on BR2_PACKAGE_XBMC
 
 comment "XBMC services"
@@ -8,6 +8,7 @@ source "package/thirdparty/xbmcaddons/skinwidgets/Config.in"
 source "package/thirdparty/xbmcaddons/weather_underground/Config.in"
 
 comment "XBMC scripts"
+
 source "package/thirdparty/xbmcaddons/help/Config.in"
 source "package/thirdparty/xbmcaddons/radio/Config.in"
 source "package/thirdparty/xbmcaddons/fanart/Config.in"
@@ -18,7 +19,7 @@ source "package/thirdparty/xbmcaddons/boxik_service/Config.in"
 source "package/thirdparty/xbmcaddons/xbmc_subtitles/Config.in"
 source "package/thirdparty/xbmcaddons/hdtrailers_net/Config.in"
 source "package/thirdparty/xbmcaddons/artistslideshow/Config.in"
-source "package/thirdparty/xbmcaddons/artwork/Config.in
+source "package/thirdparty/xbmcaddons/artwork/Config.in"
 source "package/thirdparty/xbmcaddons/plugincache/Config.in"
 source "package/thirdparty/xbmcaddons/favourites/Config.in"
 source "package/thirdparty/xbmcaddons/globalsearch/Config.in"
