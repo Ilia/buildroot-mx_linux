@@ -4,7 +4,7 @@
 #
 ###############################################################################
 CHORUS_VERSION = 0.3.9
-CHORUS_SOURCE = webinterface.chorus.$(CHORUS_VERSION).zip
+CHORUS_SOURCE = webinterface.chorus.$(CHORUS_VERSION).zip?raw=true
 CHORUS_SITE = https://github.com/jez500/chorus/blob/master/ 
 CHORUS_INSTALL_STAGING = NO
 CHORUS_INSTALL_TARGET = YES
