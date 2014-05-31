@@ -23,13 +23,13 @@
     <buffermode>1</buffermode>
   </network>
 
-  <!-- audiooutput>
+  <audiooutput>
     <truehdpassthrough>false</truehdpassthrough>
     <dtshdpassthrough>false</dtshdpassthrough>
     <audiodevice>ALSA:@</audiodevice>
     <channels>1</channels>
     <config>2</config>
-  </audiooutput -->
+  </audiooutput>
 
   <videoscreen>
     <blankdisplays>false</blankdisplays>
