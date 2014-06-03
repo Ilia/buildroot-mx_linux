@@ -1,0 +1,32 @@
+From 0c2854e69b14f6a964315de99ee321d13afb4721 Mon Sep 17 00:00:00 2001
+From: Ilia Mogilevsky <ilia@mogilevsky.com.au>
+Date: Sat, 31 May 2014 16:34:19 +1000
+Subject: [PATCH 1/1] force passtru
+
+---
+ xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp b/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
+index 56b72d3..c196a6b 100644
+--- a/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
++++ b/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
+@@ -95,6 +95,7 @@ AEDeviceType CActiveAESink::GetDeviceType(const std::string &device)
+ 
+ bool CActiveAESink::HasPassthroughDevice()
+ {
++  return true;
+   for (AESinkInfoList::iterator itt = m_sinkInfoList.begin(); itt != m_sinkInfoList.end(); ++itt)
+   {
+     for (AEDeviceInfoList::iterator itt2 = itt->m_deviceInfoList.begin(); itt2 != itt->m_deviceInfoList.end(); ++itt2)
+@@ -109,6 +110,7 @@ bool CActiveAESink::HasPassthroughDevice()
+ 
+ bool CActiveAESink::SupportsFormat(const std::string &device, AEDataFormat format, int samplerate)
+ {
++  return true;
+   std::string dev = device;
+   std::string dri;
+   CAESinkFactory::ParseDevice(dev, dri);
+-- 
+1.8.5.2 (Apple Git-48)
+
