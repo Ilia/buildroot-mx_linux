@@ -71,7 +71,7 @@ if [ -e "$BACKUP_FILE" ] ; then
     # echo "all good. normal startup in 5s..."
     sleep 5
   else
-    # echo FAILED
+    echo FAILED
     # echo "normal startup in 30s..."
     # rm -f $BACKUP_FILE &>/dev/null
     # sleep 30
