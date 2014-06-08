@@ -54,13 +54,14 @@ EOF
 # compair it to version and extract
 #
 
-BACKUP_FILE=`ls -1 /root/.restore/??????????????.tar 2>/dev/null | tail -1`
+BACKUP_FILE=`find /media/ -name "backup.Build_#*.tar" 2>/dev/null | tail -1`
 
 if [ -e "$BACKUP_FILE" ] ; then
   echo -en "please wait.. checking backup file: "
   tar tf $BACKUP_FILE &>/dev/null
   ret=$?
   if [ $ret -eq 0 ] ; then
+    echo -en "extracting and overwriting "
     # /usr/bin/lzopcat /usr/share/splash/restoring.fb.lzo > /dev/fb0
     # echo 0 > /sys/class/graphics/fb0/blank
     rm -rf /root/.xbmc &>/dev/null
@@ -68,7 +69,7 @@ if [ -e "$BACKUP_FILE" ] ; then
     rm -f $BACKUP_FILE &>/dev/null
     # /usr/bin/lzopcat /usr/share/splash/restored.fb.lzo > /dev/fb0
     # echo 0 > /sys/class/graphics/fb0/blank
-    # echo "all good. normal startup in 5s..."
+    echo "all good. normal startup in 5s..."
     sleep 5
   else
     echo FAILED
