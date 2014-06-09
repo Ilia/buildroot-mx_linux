@@ -1,0 +1,76 @@
+#!/bin/sh
+
+#
+# Restore back up if available
+# 
+
+BACKUP_FILE=`find /media/ -name "backup.Build_#*.tar" 2>/dev/null | tail -1`
+
+if [ -e "$BACKUP_FILE" ] ; then
+  echo -en "please wait.. checking backup file: "
+  tar tf $BACKUP_FILE &>/dev/null
+  ret=$?
+  if [ $ret -eq 0 ] ; then
+    echo -en "extracting and overwriting "
+    # /usr/bin/lzopcat /usr/share/splash/restoring.fb.lzo > /dev/fb0
+    # echo 0 > /sys/class/graphics/fb0/blank
+    rm -rf /root/.xbmc &>/dev/null
+    tar xf $BACKUP_FILE -C / &>/dev/null
+    rm -f $BACKUP_FILE &>/dev/null
+    # /usr/bin/lzopcat /usr/share/splash/restored.fb.lzo > /dev/fb0
+    # echo 0 > /sys/class/graphics/fb0/blank
+    echo "all good. normal startup in 5s..."
+    sleep 5
+  else
+    echo FAILED
+    # echo "normal startup in 30s..."
+    # rm -f $BACKUP_FILE &>/dev/null
+    # sleep 30
+  fi
+fi 
+
+#
+# setup XBMC sources
+#
+
+  if [ ! -f /root/.xbmc/userdata/sources.xml ]; then
+    if [ -f /usr/share/xbmc/config/sources.xml ]; then
+      # include project specific sources
+      cp /usr/share/xbmc/config/sources.xml /root/.xbmc/userdata
+    else
+      cat > /root/.xbmc/userdata/sources.xml << EOF
+<sources>
+    <programs>
+        <default pathversion="1"></default>
+    </programs>
+    <video>
+        <default pathversion="1"></default>
+    </video>
+    <music>
+        <default pathversion="1"></default>
+    </music>
+    <pictures>
+        <default pathversion="1"></default>
+    </pictures>
+    <files>
+        <default pathversion="1"></default>
+        <source>
+            <name>.fusion</name>
+            <path pathversion="1">http://fusion.xbmchub.com/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>.mashup</name>
+            <path pathversion="1">http://install.mashupxbmc.com/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>.xfinity</name>
+            <path pathversion="1">http://xfinity.xunitytalk.com/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </files>
+</sources>
+EOF
+    fi
+  fi
