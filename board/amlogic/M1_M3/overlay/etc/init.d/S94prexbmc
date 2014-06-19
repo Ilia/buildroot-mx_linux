@@ -12,13 +12,13 @@ if [ -e "$BACKUP_FILE" ] ; then
   ret=$?
   if [ $ret -eq 0 ] ; then
     echo -en "extracting and overwriting "
-    # /usr/bin/lzopcat /usr/share/splash/restoring.fb.lzo > /dev/fb0
-    # echo 0 > /sys/class/graphics/fb0/blank
+    /usr/bin/lzopcat /usr/share/splash/restoring.fb.lzo > /dev/fb0
+    echo 0 > /sys/class/graphics/fb0/blank
     rm -rf /root/.xbmc &>/dev/null
     tar xf $BACKUP_FILE -C / &>/dev/null
     rm -f $BACKUP_FILE &>/dev/null
-    # /usr/bin/lzopcat /usr/share/splash/restored.fb.lzo > /dev/fb0
-    # echo 0 > /sys/class/graphics/fb0/blank
+    /usr/bin/lzopcat /usr/share/splash/restored.fb.lzo > /dev/fb0
+    echo 0 > /sys/class/graphics/fb0/blank
     echo "all good. normal startup in 5s..."
     sleep 5
   else
