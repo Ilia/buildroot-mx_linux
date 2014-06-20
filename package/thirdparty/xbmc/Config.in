@@ -91,6 +91,18 @@ config BR2_PACKAGE_XBMC
 menu "XBMC Options"
 	depends on BR2_PACKAGE_XBMC
 
+comment "XBMC Build Options"
+
+config BR2_PACKAGE_XBMC_REV
+	string "Github Revision"
+	default "13.1-Gotham"
+	help
+	  This option will set the github revision.
+
+	  Github: "git://github.com/xbmc/xbmc.git"
+	  Default: "13.1-Gotham"
+	  Beware: Changing this could break patchs
+
 comment "XBMC Customization Options"
 
 config BR2_XBMC_MEDIA_FOLDER
@@ -152,8 +164,8 @@ config BR2_XBMC_ADV_SETTINGS
 
 	  NOTES:
 		- If this option is not set XBMC will use it's default advanced settings
-		- Selected configuration will be installed to "/usr/share/xbmc/system/advancedsettings.xml"
-		- Remote configuration should be located in "package/thirdparty/xbmc/settings"
+		- Advanced settings XML will be installed to "/usr/share/xbmc/system/advancedsettings.xml"
+		- Advanced settings XML should be located in "package/thirdparty/xbmc/settings"
 		- Compiler will append ".xml" to end of file name
 
 config BR2_XBMC_SPLASH
