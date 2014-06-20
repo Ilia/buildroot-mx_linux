@@ -64,10 +64,6 @@ else
 XBMC_KEYMAP = package/thirdparty/xbmc/keymaps/keyboard.xml
 endif
 
-ifneq ($(BR2_XBMC_SETTINGS),"")
-XBMC_SETTINGS = package/thirdparty/xbmc/settings/$(call qstrip,$(BR2_XBMC_SETTINGS)).xml
-endif
-
 ifneq ($(BR2_XBMC_ADV_SETTINGS),"")
 XBMC_ADV_SETTINGS = package/thirdparty/xbmc/settings/$(call qstrip,$(BR2_XBMC_ADV_SETTINGS)).xml
 else ifeq ($(BR2_ARM_AMLOGIC),y)
@@ -165,10 +161,6 @@ define XBMC_BUILD_VERSION
   cp -f package/thirdparty/xbmc/model $(TARGET_DIR)/usr/share/xbmc/system/
 endef
 
-define XBMC_INSTALL_SETTINGS
-  cp -f $(XBMC_SETTINGS) $(TARGET_DIR)/usr/share/xbmc/system/settings/settings.xml
-endef
-
 define XBMC_INSTALL_ADV_SETTINGS
   cp -f $(XBMC_ADV_SETTINGS) $(TARGET_DIR)/usr/share/xbmc/system/advancedsettings.xml
 endef
@@ -250,10 +242,6 @@ XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_CONFLUENCE_SKIN
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_REMOTE_CONF
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ADDONS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_BUILD_VERSION
-
-ifneq ($(BR2_XBMC_SETTINGS),"")
-XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SETTINGS
-endif
 
 ifneq ($(BR2_ENABLE_DEBUG),y)
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_STRIP_BINARIES
