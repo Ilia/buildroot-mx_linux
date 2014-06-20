@@ -190,6 +190,8 @@ define XBMC_INSTALL_SPLASHS
   cp -f $(XBMC_STOPPING_FB) $(TARGET_DIR)/usr/share/splash/stopping.fb.lzo
   cp -f $(XBMC_COPYING_FB) $(TARGET_DIR)/usr/share/splash/copying.fb.lzo
   cp -f $(XBMC_COMPLETE_FB) $(TARGET_DIR)/usr/share/splash/complete.fb.lzo
+  cp -f package/thirdparty/xbmc/fb_splashs/boxik_restoring.fb.lzo $(TARGET_DIR)/usr/share/splash/restoring.fb.lzo
+  cp -f package/thirdparty/xbmc/fb_splashs/boxik_restored.fb.lzo $(TARGET_DIR)/usr/share/splash/restored.fb.lzo
   cp -f $(XBMC_SPLASH_FILE) $(TARGET_DIR)/usr/share/xbmc/media/Splash.png
 endef
 
