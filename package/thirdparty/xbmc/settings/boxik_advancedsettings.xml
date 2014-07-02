@@ -24,8 +24,10 @@
   </network>
 
   <audiooutput>
+    <eac3passthrough>false</eac3passthrough>
     <truehdpassthrough>false</truehdpassthrough>
     <dtshdpassthrough>false</dtshdpassthrough>
+    <passthroughdevice>default</passthroughdevice>
     <audiodevice>ALSA:@</audiodevice>
     <channels>1</channels>
     <config>2</config>
