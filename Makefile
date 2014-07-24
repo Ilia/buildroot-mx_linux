@@ -345,6 +345,10 @@ endif
 # and after overlay files are copied
 ROOT_PWD := $(call qstrip,$(BR2_TARGET_GENERIC_ROOT_PASSWD))
 ifneq ($(ROOT_PWD),)
+EXISTS_MKPASSWD = $(shell type -p "mkpasswd")
+
+$(if $(EXISTS_MKPASSWD),, $(error mkpasswd command doesn't exist))
+
 TARGETS+=target-makepassword
 endif
 
@@ -500,9 +504,9 @@ endif
 	mkdir -p $(TARGET_DIR)/var/cache/ldconfig
 	if [ -x "$(TARGET_CROSS)ldconfig" ]; \
 	then \
-		$(TARGET_CROSS)ldconfig -r $(TARGET_DIR); \
+		$(TARGET_CROSS)ldconfig -r $(TARGET_DIR) 2>/dev/null; \
 	else \
-		/sbin/ldconfig -r $(TARGET_DIR); \
+		/sbin/ldconfig -r $(TARGET_DIR) 2>/dev/null; \
 	fi
 	( \
 		echo "NAME=Buildroot"; \
@@ -573,10 +577,11 @@ endif
 TARGET_ROOT_PASSWD := $(call qstrip,$(BR2_TARGET_GENERIC_ROOT_PASSWD))
 TARGET_PASSWD_METHOD := $(call qstrip,$(BR2_TARGET_GENERIC_PASSWD_METHOD))
 ifneq ($(TARGET_ROOT_PASSWD),)
+
 TARGET_ROOT_PASSWD_HASH = $(shell mkpasswd -m "$(TARGET_PASSWD_METHOD)" "$(TARGET_ROOT_PASSWD)")
 
 target-makepassword:
-	$(SED) 's,^root:[^:]*:,root:$(TARGET_ROOT_PASSWD_HASH):,' $(TARGET_DIR)/etc/shadow
+	@$(SED) 'root:[^:]*:,root:$(TARGET_ROOT_PASSWD_HASH):,' $(TARGET_DIR)/etc/shadow
 
 endif
 

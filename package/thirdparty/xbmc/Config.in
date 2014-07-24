@@ -63,7 +63,7 @@ config BR2_PACKAGE_XBMC
 	select BR2_PACKAGE_AFPFS_NG
 	select BR2_PACKAGE_LIBBLURAY
 	select BR2_PACKAGE_LIBPLIST
-	select BR2_PACKAGE_LIBSHAIRPORT
+	select BR2_PACKAGE_LIBSHAIRPLAY
 	select BR2_PACKAGE_AVAHI
 	select BR2_PACKAGE_AVAHI_DAEMON
 	select BR2_PACKAGE_NCURSES_TARGET_PANEL
@@ -95,12 +95,12 @@ comment "XBMC Build Options"
 
 config BR2_PACKAGE_XBMC_REV
 	string "Github Revision"
-	default "13.1-Gotham"
+	default "13.2-Gotham"
 	help
 	  This option will set the github revision.
 
 	  Github: "git://github.com/xbmc/xbmc.git"
-	  Default: "13.1-Gotham"
+	  Default: "13.2-Gotham"
 	  Beware: Changing this could break patchs
 
 comment "XBMC Customization Options"
@@ -180,6 +180,18 @@ config BR2_XBMC_SPLASH
 		- Splash should be located in "package/thirdparty/xbmc/logos"
 		- Compiler will append ".png" to end of file name
 
+config BR2_XBMC_OVERLAY_FB
+	bool "Use FB splash's from overlay"
+	default n
+	help
+	  This option disables installing FB splash's.
+	  (Only use if splash's are included in overlay)
+
+	  NOTES: 
+		- If this option is set XBMC will not install fb splash's
+		- If no splash's are included in overlay then none will be installed 
+
+if !BR2_XBMC_OVERLAY_FB
 config BR2_XBMC_STARTING_FB
 	string "Starting FB splash"
 	default ""
@@ -223,6 +235,7 @@ config BR2_XBMC_COMPLETE_FB
 		- If this option is not set XBMC will use it's default complete fb splash
 		- Splash should be located in "package/thirdparty/xbmc/fb_splashs"
 		- Compiler will append ".fb.lzo" to end of file name
+endif
 
 config BR2_XBMC_DEFAULT_SKIN
 	string "Default Skin"
@@ -237,6 +250,8 @@ config BR2_XBMC_DEFAULT_SKIN
 		- If this option is not set XBMC will use confluence
 		- The set skin must exist in the source tree
 		- Compiler will append "skin." to begining of skin name
+		- This will overwrite skin choice in custom settings.xml
+
 
 config BR2_XBMC_NO_CONFLUENCE
 	bool "Don't install confluence skin"

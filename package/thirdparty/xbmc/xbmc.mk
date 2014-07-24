@@ -44,7 +44,7 @@ XBMC_DEPENDENCIES += flac libmad libmpeg2 libogg \
   python lzo zlib libgcrypt openssl mysql_client sqlite fontconfig \
   freetype jasper jpeg libmodplug libpng libungif tiff libcurl \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng \
-  libplist libshairport libbluray libcec \
+  libplist libshairplay libbluray libcec \
   readline expat libxml2 yajl samba libass opengl libusb-compat \
   avahi udev tinyxml taglib18 libssh libxslt
 
@@ -86,6 +86,7 @@ else
 XBMC_DEFAULT_SKIN = skin.confluence
 endif
 
+
 ifneq ($(BR2_XBMC_SPLASH),"")
 XBMC_SPLASH_FILE = package/thirdparty/xbmc/logos/$(call qstrip,$(BR2_XBMC_SPLASH)).png
 else
@@ -120,6 +121,7 @@ ifneq ($(BR2_XBMC_COMPLETE_FB),"")
 XBMC_COMPLETE_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_COMPLETE_FB)).fb.lzo
 else
 XBMC_COMPLETE_FB = package/thirdparty/xbmc/fb_splashs/complete.fb.lzo
+endif
 endif
 
 ifeq ($(BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_POWERDOWN),y)
@@ -181,11 +183,10 @@ define XBMC_INSTALL_REMOTE_CONF
 endef
 
 define XBMC_SET_DEFAULT_SKIN
-  sed -i '/#define DEFAULT_SKIN/c\#define DEFAULT_SKIN          "$(XBMC_DEFAULT_SKIN)"' $(XBMC_DIR)/xbmc/system.h
+  sed -ci '/<default>skin./c\          <default>skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))</default>' $(TARGET_DIR)/usr/share/xbmc/system/settings/settings.xml
 endef
 
-define XBMC_INSTALL_SPLASHS
-  mkdir -p $(TARGET_DIR)/usr/share/splash
+define XBMC_INSTALL_FB_SPLASHS
   cp -f $(XBMC_STARTING_FB) $(TARGET_DIR)/usr/share/splash/starting.fb.lzo
   cp -f $(XBMC_STOPPING_FB) $(TARGET_DIR)/usr/share/splash/stopping.fb.lzo
   cp -f $(XBMC_COPYING_FB) $(TARGET_DIR)/usr/share/splash/copying.fb.lzo
@@ -210,7 +211,7 @@ define XBMC_CLEAN_UNUSED_ADDONS
 endef
 
 define XBMC_SET_CONFLUENCE_POWER_BUTTON
-  sed -i '/				####Compiler will set function####/c\				<onclick>$(CONFLUENCE_POWER_BUTTON_FUNCTION)</onclick>' $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/720p/Home.xml
+  sed -ci '/				####Compiler will set function####/c\				<onclick>$(CONFLUENCE_POWER_BUTTON_FUNCTION)</onclick>' $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/720p/Home.xml
 endef
 
 define XBMC_CLEAN_CONFLUENCE_SKIN
@@ -231,12 +232,10 @@ define XBMC_STRIP_BINARIES
   $(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/xbmc/xbmc.bin
 endef
 
-XBMC_PRE_CONFIGURE_HOOKS += XBMC_SET_DEFAULT_SKIN
 XBMC_PRE_CONFIGURE_HOOKS += XBMC_BOOTSTRAP
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ETC
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ADV_SETTINGS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_KEYMAP
-XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SPLASHS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_UNUSED_ADDONS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_CONFLUENCE_SKIN
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_REMOTE_CONF
