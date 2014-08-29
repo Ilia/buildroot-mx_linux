@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = 13.1-Gotham
+XBMC_VERSION = 13.2-Gotham
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/xbmc/xbmc.git
 XBMC_INSTALL_STAGING = YES
@@ -121,7 +121,6 @@ ifneq ($(BR2_XBMC_COMPLETE_FB),"")
 XBMC_COMPLETE_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_COMPLETE_FB)).fb.lzo
 else
 XBMC_COMPLETE_FB = package/thirdparty/xbmc/fb_splashs/complete.fb.lzo
-endif
 endif
 
 ifeq ($(BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_POWERDOWN),y)
