@@ -7,6 +7,7 @@
       <f1>XBMC.ActivateWindow(MyPictures)</f1>
       <f9>XBMC.RunScript(script.linux.nm)</f9>
       <f10>XBMC.ActivateWindow(MyFiles)</f10>
+      <power>XBMC.ShutDown()</power>
       <o>Info</o>
       <delete>Back</delete>
     </keyboard>
