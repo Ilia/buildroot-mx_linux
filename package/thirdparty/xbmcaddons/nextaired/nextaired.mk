@@ -3,7 +3,7 @@
 ## Xbmc script.tv.show.next.aired Addon
 #
 ###############################################################################
-NEXTAIRED_VERSION = 6.0.10
+NEXTAIRED_VERSION = 6.0.11
 NEXTAIRED_SOURCE = script.tv.show.next.aired-$(NEXTAIRED_VERSION).zip
 NEXTAIRED_SITE = http://mirrors.xbmc.org/addons/frodo/script.tv.show.next.aired/
 NEXTAIRED_INSTALL_STAGING = NO
