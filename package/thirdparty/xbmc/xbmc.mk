@@ -186,6 +186,7 @@ define XBMC_SET_DEFAULT_SKIN
 endef
 
 define XBMC_INSTALL_FB_SPLASHS
+  mkdir -p $(TARGET_DIR)/usr/share/splash
   cp -f $(XBMC_STARTING_FB) $(TARGET_DIR)/usr/share/splash/starting.fb.lzo
   cp -f $(XBMC_STOPPING_FB) $(TARGET_DIR)/usr/share/splash/stopping.fb.lzo
   cp -f $(XBMC_COPYING_FB) $(TARGET_DIR)/usr/share/splash/copying.fb.lzo
