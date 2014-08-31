@@ -14,7 +14,7 @@ if [ -e "$BACKUP_FILE" ] ; then
     echo -en "extracting and overwriting "
     /usr/bin/lzopcat /usr/share/splash/restoring.fb.lzo > /dev/fb0
     echo 0 > /sys/class/graphics/fb0/blank
-    rm -rf /root/.xbmc &>/dev/null
+    rm -rf /root/ &>/dev/null
     tar xf $BACKUP_FILE -C / &>/dev/null
     rm -f $BACKUP_FILE &>/dev/null
     /usr/bin/lzopcat /usr/share/splash/restored.fb.lzo > /dev/fb0
